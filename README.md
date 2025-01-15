@@ -1,5 +1,6 @@
 # ENM5320
 AI4Science/Science4AI Spring 2025
+MW 10:15am-11:44am in TOWN 309 (1/15 to 4/30)
 
 # Current Schedule
 - **Jan 15.**  Quick intro to pytorch and course logistics
