@@ -36,8 +36,9 @@ versa.
 
 # Course Objectives
 By the end of this course, you should be able to:
+
 • Comfortably use pytorch or another automatic differentiation library to fit physics to traditional models
-* Implement standard schemes (finite differences, volumes, elements) to a simple 1D code
+* Implement standard schemes (finite differences, volumes, elements) into a simple 1D code
 * Use variational principles and numerical analysis to propose novel machine learning architectures
  
 # Prerequisites
