@@ -1,6 +1,8 @@
 # ENM5320
 AI4Science/Science4AI Spring 2025
+
 MW 10:15am-11:44am in TOWN 309 (1/15 to 4/30)
+
 Ed Discussion board: https://edstem.org/us/courses/74501
 
 # Current Schedule
