@@ -12,7 +12,8 @@ Ed Discussion board: https://edstem.org/us/courses/74501
 - **Jan 22.** Finite difference crash course. Fourier analysis, grid functions, analysis for solutions to linear transport.
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_2.pdf)
   - [Homework assignment](https://github.com/natrask/ENM5320/blob/main/Assignments/ENM5320__HW1.pdf). Due 1/29 by midnight through Canvas.
-  - [Jupyter notebook](https://github.com/natrask/ENM5320/blob/main/Code/Lecture01.ipynb) 
+  - [Jupyter notebook](https://github.com/natrask/ENM5320/blob/main/Code/Lecture01.ipynb)
+  - [E-book reference](https://find.library.upenn.edu/catalog/9977071082103681?hld_id=53499053800003681). Material is drawn from Ch. 1-2 of Gustafsson.
 - **Jan 29.** Extracting finite difference stencils from data. Lax-Wendroff schemes.
 - **Jan 31.** Extensions to general point clouds. Generalized finite differences and graph neural networks.
 
