@@ -9,7 +9,10 @@ Ed Discussion board: https://edstem.org/us/courses/74501
 - **Jan 15.**  Quick intro to pytorch and course logistics
   - [Jupyter notebook](https://github.com/natrask/ENM5320/blob/main/Code/ENM_5320_Lec_1.ipynb)
 - **Jan 20.** No class for holiday
-- **Jan 22.** Finite difference crash course. Implementation, stability analysis, and effective equation.
+- **Jan 22.** Finite difference crash course. Fourier analysis, grid functions, analysis for solutions to linear transport.
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_2.pdf)
+  - [Homework assignment](https://github.com/natrask/ENM5320/blob/main/Assignments/ENM5320__HW1.pdf). Due 1/29 by midnight through Canvas.
+  - [Jupyter notebook](https://github.com/natrask/ENM5320/blob/main/Code/Lecture01.ipynb) 
 - **Jan 29.** Extracting finite difference stencils from data. Lax-Wendroff schemes.
 - **Jan 31.** Extensions to general point clouds. Generalized finite differences and graph neural networks.
 
