@@ -55,7 +55,7 @@ Formally this course is a sequence with ENM5310. It is ok if you haven't taken t
 # Teaching Staff and Office Hours
 - Instructor: Dr. Nat Trask <ntrask@seas.upenn.edu>
   - Associate Professor, MEAM
-    Office hours: TBA
+    Office hours: Tuesday 9:30-11 and by Appointment through Ed. 519 Amy Gutmann Hall. 
 - Graduate teaching assistant: Cyril Palathinkal <cyrilp@seas.upenn.edu>
   - TA Office hours: TBA
 - *Reminder:* All correspondence should be through the ed forum. Emails are provided here for special circumstances (e.g. you can't access the OH building) and will otherwise be ignored.
