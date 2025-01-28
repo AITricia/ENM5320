@@ -14,7 +14,8 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [Homework assignment](https://github.com/natrask/ENM5320/blob/main/Assignments/ENM5320__HW1.pdf). Due 1/29 by midnight through Canvas.
   - [Jupyter notebook](https://github.com/natrask/ENM5320/blob/main/Code/Lecture01.ipynb)
   - [E-book reference](https://find.library.upenn.edu/catalog/9977071082103681?hld_id=53499053800003681). Material is drawn from Ch. 1-2 of Gustafsson.
-- **Jan 29.** Extracting finite difference stencils from data. Lax-Wendroff schemes.
+- **Jan 29.** Virtual lecture. Introduction to data-driven models. Finite difference code and pytorch review.
+  - [Link to lecture video](https://www.youtube.com/watch?v=z7enURoFU3k)
 - **Jan 31.** Extensions to general point clouds. Generalized finite differences and graph neural networks.
 
 # Description
