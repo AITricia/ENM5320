@@ -8,7 +8,6 @@ Ed Discussion board: https://edstem.org/us/courses/74501
 
 # Current Schedule
 - **Jan 15.**  Quick intro to pytorch and course logistics
-  - [Jupyter notebook](https://github.com/natrask/ENM5320/blob/main/Code/ENM_5320_Lec_1.ipynb)
 - **Jan 20.** No class for holiday
 - **Jan 22.** Finite difference crash course. Fourier analysis, grid functions, analysis for solutions to linear transport.
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_2.pdf)
