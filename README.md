@@ -2,6 +2,7 @@
 AI4Science/Science4AI Spring 2025
 
 MW 10:15am-11:44am in TOWN 309 (1/15 to 4/30)
+Office hours 5th floor AGH 915-1030
 
 Ed Discussion board: https://edstem.org/us/courses/74501
 
@@ -56,7 +57,7 @@ Formally this course is a sequence with ENM5310. It is ok if you haven't taken t
 # Teaching Staff and Office Hours
 - Instructor: Dr. Nat Trask <ntrask@seas.upenn.edu>
   - Associate Professor, MEAM
-    Office hours: Tuesday 9:30-11 and by Appointment through Ed. 519 Amy Gutmann Hall. 
+    Office hours: Tuesday 9:15-11 and by Appointment through Ed. 519 Amy Gutmann Hall. 
 - Graduate teaching assistant: Cyril Palathinkal <cyrilp@seas.upenn.edu>
   - TA Office hours: TBA
 - *Reminder:* All correspondence should be through the ed forum. Emails are provided here for special circumstances (e.g. you can't access the OH building) and will otherwise be ignored.
