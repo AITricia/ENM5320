@@ -2,7 +2,8 @@
 AI4Science/Science4AI Spring 2025
 
 MW 10:15am-11:44am in TOWN 309 (1/15 to 4/30)
-Office hours 5th floor AGH 915-1030
+Trask OH: 5th floor AGH Tues. 915-1030
+Grad TA OH: AGH 214, Friday, 4pm-6pm.
 
 Ed Discussion board: https://edstem.org/us/courses/74501
 
