@@ -19,7 +19,11 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [E-book reference](https://find.library.upenn.edu/catalog/9977071082103681?hld_id=53499053800003681). Material is drawn from Ch. 1-2 of Gustafsson.
 - **Jan 29.** Virtual lecture. Introduction to data-driven models. Finite difference code and pytorch review.
   - [Link to lecture video](https://www.youtube.com/watch?v=z7enURoFU3k)
-- **Jan 31.** Extensions to general point clouds. Generalized finite differences and graph neural networks.
+- **Jan 31.** Finalizing deep dive into finite difference theory.
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_4.pdf)   
+- **Feb 3.** Introduction to CNNs, data-driven finite difference discovery.
+- **Feb 5.** Finalizing finite difference introduction.
+- **Feb 10. ** Extensions to general point clouds. Generalized finite differences and graph neural networks.
 
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
