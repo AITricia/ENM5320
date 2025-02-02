@@ -19,8 +19,13 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [E-book reference](https://find.library.upenn.edu/catalog/9977071082103681?hld_id=53499053800003681). Material is drawn from Ch. 1-2 of Gustafsson.
 - **Jan 29.** Virtual lecture. Introduction to data-driven models. Finite difference code and pytorch review.
   - [Link to lecture video](https://www.youtube.com/watch?v=z7enURoFU3k)
-- **Jan 31.** Extensions to general point clouds. Generalized finite differences and graph neural networks.
-
+- **Jan 31.** Stability analysis and the Lax equivalence theorem (aka fundamental theorem of finite differences)
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_4.pdf)
+  - [Example code for finite differences in numpy](https://github.com/natrask/ENM5320/blob/main/Code/finiteDifferenceExample.ipynb)
+- **Feb 3.** Designing learning architectures with consistency and stability guarantees 
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_5.pdf)
+  - [Example code for learning stencils in pytorch](https://github.com/natrask/ENM5320/blob/main/Code/PyTorchFDM.ipynb)
+  - 
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
 tackle previously inaccessible problems in scientific discovery, engineering prediction, and optimal design. ML however has been
