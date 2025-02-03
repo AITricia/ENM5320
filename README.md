@@ -25,7 +25,7 @@ Ed Discussion board: https://edstem.org/us/courses/74501
 - **Feb 3.** Designing learning architectures with consistency and stability guarantees 
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_5.pdf)
   - [Example code for learning stencils in pytorch](https://github.com/natrask/ENM5320/blob/main/Code/PyTorchFDM.ipynb)
-  - 
+  - [Homework assignment](https://github.com/natrask/ENM5320/blob/main/Assignments/ENM5320__HW2.pdf). Due 2/10 by midnight through Canvas.
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
 tackle previously inaccessible problems in scientific discovery, engineering prediction, and optimal design. ML however has been
