@@ -28,6 +28,7 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [Homework assignment](https://github.com/natrask/ENM5320/blob/main/Assignments/ENM5320__HW2.pdf). Due 2/10 by midnight through Canvas.
 - **Feb 5.** Nonlinear stability analysis, constrained quadratic programming, and polynomial reproduction.
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_6.pdf)
+  - [Lecture notes - addendum](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_6_addendum.pdf)
 - **Feb 10.** Lecture will be replaced with a guided programming exercise to be completed by class on Wed. Go birds!
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
