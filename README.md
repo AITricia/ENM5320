@@ -29,7 +29,9 @@ Ed Discussion board: https://edstem.org/us/courses/74501
 - **Feb 5.** Nonlinear stability analysis, constrained quadratic programming, and polynomial reproduction.
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_6.pdf)
   - [Lecture notes - addendum](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_6_addendum.pdf)
-- **Feb 10.** Lecture will be replaced with a guided programming exercise to be completed by class on Wed. Go birds!
+- **Feb 10.** Coding tutorial coding up nonlinear stencils.
+  - [Code](https://github.com/natrask/ENM5320/blob/main/Code/Trainable_Nonlinear_Stencil.ipynb)
+  - [Youtube lecture](https://www.youtube.com/watch?v=U6bb5Fv-i-c)
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
 tackle previously inaccessible problems in scientific discovery, engineering prediction, and optimal design. ML however has been
