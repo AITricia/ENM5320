@@ -33,7 +33,12 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [Code](https://github.com/natrask/ENM5320/blob/main/Code/Trainable_Nonlinear_Stencil.ipynb)
   - [Youtube lecture](https://www.youtube.com/watch?v=U6bb5Fv-i-c)
 - **Feb 12.** Hamiltonian systems and discrete gradients.
-  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_7.pdf)   
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_7.pdf)
+- **Feb 17.** Lagrangian mechanics, functional derivatives, the principle of least action, Legendre transforms and Noether's theorem.
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_8.pdf)
+  - [Feynmann lecture on least action](https://www.feynmanlectures.caltech.edu/II_19.html)
+  - [Lagrangian neural networks](https://greydanus.github.io/2020/03/10/lagrangian-nns/)
+  - 
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
 tackle previously inaccessible problems in scientific discovery, engineering prediction, and optimal design. ML however has been
