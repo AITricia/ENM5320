@@ -40,6 +40,7 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [Lagrangian neural networks](https://greydanus.github.io/2020/03/10/lagrangian-nns/)
 - **Feb 19.** Obtaining discrete structure-preserving stencils from the principle of least action
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_9.pdf)
+  - [Additional short proof for Noethers theorem](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/noether_thm_simple_proof.pdf)
   - [Homework assignment](https://github.com/natrask/ENM5320/blob/main/Assignments/ENM5320__HW3.pdf). Due 2/26 by midnight through Canvas.
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
