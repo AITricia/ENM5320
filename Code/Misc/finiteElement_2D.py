@@ -25,8 +25,8 @@ print(f"Using device: {device}")
 # Define points and h as needed
 Tdomain = 1
 Xdomain = 1
-meshsizex = 10
-meshsizet = 10
+meshsizex = 3
+meshsizet = 3
 h = Xdomain/float(meshsizex-1)
 k = Tdomain/float(meshsizet-1)
 meshsize = meshsizex*meshsizet
@@ -49,41 +49,59 @@ def evalGradPhi_i(x,pts):
     signNeg = (torch.unsqueeze(pts, 1) <= torch.unsqueeze(x, 0)).double()
     return suppPhi * (-signPlus + signNeg) / h
 
-# Visualize shape functions and their derivatives evaluated over a fine grid
-# phi_i = evalPhi_i(finepointsx,pointsx)
-psi0_ij = torch.einsum('iq,jq->ijq', evalPhi_i(pointsx,pointsx), evalPhi_i(pointst,pointst))
-gradpsi_ij = torch.einsum('iq,jq->ijq', evalGradPhi_i(pointsx,pointsx), evalPhi_i(pointst,pointst))
+# %% Visualize shape functions and their derivatives evaluated over a fine grid
+X, T = torch.meshgrid(finepointsx, finepointst)
+xflat = X.flatten()
+tflat = T.flatten()
+psi0_ij = torch.einsum('iq,jq->ijq', evalPhi_i(xflat,pointsx), evalPhi_i(tflat,pointst))
+gradpsi_ij = torch.einsum('iq,jq->ijq', evalGradPhi_i(xflat,pointsx), evalPhi_i(tflat,pointst))
 psi1_ijkl = torch.einsum('ijq,ijq->ijq', psi0_ij, gradpsi_ij)-torch.einsum('ijq,ijq->ijq', gradpsi_ij, psi0_ij)
+# Reshape back into meshgrid format
+psi0_ij = psi0_ij.reshape(meshsizet,meshsizex, 20*meshsizet, 20*meshsizex)
+gradpsi_ij = gradpsi_ij.reshape(meshsizet,meshsizex, 20*meshsizet, 20*meshsizex)
+# Grid of 3D plots
+def plot_multiple_3d(n_rows=2, n_cols=2):
+    fig = plt.figure(figsize=(15, 15))
+    for i in range(n_rows):
+        for j in range(n_cols):
+            ax = fig.add_subplot(n_rows, n_cols, i*n_cols + j + 1, projection='3d')
+            Z = psi0_ij[i,j,:,:].numpy()
+            surf = ax.plot_surface(X.numpy(), T.numpy(), Z,
+                                 cmap='viridis',
+                                 linewidth=0,
+                                 antialiased=True)
+            ax.set_title(f'ψ({i},{j})')
+            # fig.colorbar(surf, ax=ax)
+    plt.tight_layout()
+    plt.show()
+plot_multiple_3d(3,3)
 
-# %%
-grad_phi_i = evalGradPhi_i(finepoints)
-
-plt.plot(finepoints.numpy(), phi_i.numpy().T)
-plt.title("Phi_i")
-plt.show()
-plt.figure()
-plt.plot(finepoints.numpy(), grad_phi_i.numpy().T)
-plt.title("Grad Phi_i")
-plt.show()
-
-# %% Get Quadrature points
-xql = points[:-1].numpy() + h * (0.5 + 1. / (2. * np.sqrt(3)))
-xqr = points[:-1].numpy() + h * (0.5 - 1. / (2. * np.sqrt(3)))
+# %% Get Quadrature points in space and time
+xql = pointsx[:-1].numpy() + h * (0.5 + 1. / (2. * np.sqrt(3)))
+xqr = pointsx[:-1].numpy() + h * (0.5 - 1. / (2. * np.sqrt(3)))
 xq = np.sort(np.concatenate([xql, xqr]))
 xq = torch.tensor(xq, dtype=torch.float64)
+tql = pointst[:-1].numpy() + h * (0.5 + 1. / (2. * np.sqrt(3)))
+tqr = pointst[:-1].numpy() + h * (0.5 - 1. / (2. * np.sqrt(3)))
+tq = np.sort(np.concatenate([tql, tqr]))
+tq = torch.tensor(tq, dtype=torch.float64)
+
+# Evaluate basis functions on quadrature points
+psi0_ij = torch.einsum('iq,jp->ijqp', evalPhi_i(xq,pointsx), evalPhi_i(tq,pointst))
+gradpsi_ij = torch.einsum('iq,jp->ijqp', evalGradPhi_i(xq,pointsx), evalPhi_i(tq,pointst))
+psi1_ijkl = torch.einsum('ijqp,ijqp->ijklqp', psi0_ij, gradpsi_ij)-torch.einsum('klqp,klqp->ijklqp', gradpsi_ij, psi0_ij)
+
 
 # %% Construct matrices
 #mass matrix of P1 basis functions
-nodal_basisEval = evalPhi_i(xq)
-Mnodal = (h / 2.) * torch.sum(torch.unsqueeze(nodal_basisEval, 0) * torch.unsqueeze(nodal_basisEval, 1), dim=2)
+M0 = (h/2)**2*torch.einsum('ijqp,klqp->ijkl', psi0_ij, psi0_ij)
+M1 = (h/2)**2*torch.einsum('ijklqp,abcdqp->ijklabcd', psi1_ijkl, psi1_ijkl)
+# integrand_M1 = torch.unsqueeze(psi1_ijkl, 0) * torch.unsqueeze(psi1_ijkl, 1)
 
-#to integrate \int f(x,y) dx dy
-integrand = evalIntegrand(xq)
-integral = (h / 2.) * torch.sum(integrand, dim=1)
+# Mnodal = (h / 2.) * torch.sum(torch.unsqueeze(nodal_basisEval, 0) * torch.unsqueeze(nodal_basisEval, 1), dim=2)
 
 #stiffness matrix of P1 basis functions
-nodal_gradbasisEval = evalGradPhi_i(xq)
-Snodal = (h / 2.) * torch.einsum('ijq->ij', torch.unsqueeze(nodal_gradbasisEval, 0) * torch.unsqueeze(nodal_gradbasisEval, 1))
+# Snodal = (h / 2.) * torch.einsum('ijq->ij', torch.unsqueeze(nodal_gradbasisEval, 0) * torch.unsqueeze(nodal_gradbasisEval, 1))
 
 # %% Construct discretization for Poisson with Dirichlet BCs on left and right
 
