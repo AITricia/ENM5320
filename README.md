@@ -42,6 +42,10 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_9.pdf)
   - [Additional short proof for Noethers theorem](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/noether_thm_simple_proof.pdf)
   - [Homework assignment](https://github.com/natrask/ENM5320/blob/main/Assignments/ENM5320__HW3.pdf). Due 2/26 by midnight through Canvas.
+- **Feb 24.** Our complete data-driven hyperbolic system model. Time integration revisited: multi-stage/multi-step schemes, linear stability analysis, Stormer-Verlet
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_10.pdf)
+  - [Code](https://github.com/natrask/ENM5320/tree/main/Code/HNN_demo)
+    
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
 tackle previously inaccessible problems in scientific discovery, engineering prediction, and optimal design. ML however has been
