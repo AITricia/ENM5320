@@ -25,8 +25,8 @@ print(f"Using device: {device}")
 # Define points and h as needed
 Tdomain = 1
 Xdomain = 1
-meshsizex = 4
-meshsizet = 4
+meshsizex = 40
+meshsizet = 40
 h = Xdomain/float(meshsizex-1)
 k = Tdomain/float(meshsizet-1)
 meshsize = meshsizex*meshsizet
@@ -93,35 +93,57 @@ psi1_ijkl = torch.einsum('ijqp,aklqp->aijklqp', psi0_ij, gradpsi_ij)-torch.einsu
 
 
 # %% Construct matrices
-#mass matrix of P1 basis functions
+# mass matrix of P1 basis functions
 M0 = (h/2)**2*torch.einsum('ijqp,klqp->ijkl', psi0_ij, psi0_ij)
 M1 = (h/2)**2*torch.einsum('aijklqp,auvwxqp->ijkluvwx', psi1_ijkl, psi1_ijkl)
-# integrand_M1 = torch.unsqueeze(psi1_ijkl, 0) * torch.unsqueeze(psi1_ijkl, 1)
-
-# Mnodal = (h / 2.) * torch.sum(torch.unsqueeze(nodal_basisEval, 0) * torch.unsqueeze(nodal_basisEval, 1), dim=2)
-
-#stiffness matrix of P1 basis functions
-# Snodal = (h / 2.) * torch.einsum('ijq->ij', torch.unsqueeze(nodal_gradbasisEval, 0) * torch.unsqueeze(nodal_gradbasisEval, 1))
-
+# Construct adjacency matrix
+D = torch.zeros((meshsizex,meshsizet,meshsizex,meshsizet), dtype=torch.float64)
+for i in range(meshsizex):
+    for j in range(meshsizet):
+        for k in range(meshsizex):
+            for l in range(meshsizet):
+                D[i,j,k,l] += 1.
+                D[i,j,i,j] -= 1.
+# Construct stiffness matrix
+S = (h/2)**2*torch.einsum('aijqp,aklqp->ijkl', gradpsi_ij, gradpsi_ij)
+            
+# Confirm the identity the D^T*M1*D = S
+S_identity = torch.einsum('ijkl,ijkluvwx,uvwx->ijuv', D, M1, D)
+print('Unit test: S - D^T*M1*D = ',np.abs((S-S_identity).detach().numpy()).sum())
 # %% Construct discretization for Poisson with Dirichlet BCs on left and right
 
+# Build flag vector to identify boundary nodes
+boundary = torch.zeros((meshsizex,meshsizet), dtype=torch.float64)
+boundary[0,:] = 1
+boundary[-1,:] = 1
+boundary[:,0] = 1
+boundary[:,-1] = 1
+boundary_flat = boundary.flatten()
+
 # Set up forcing function evaluated on the nodes and specify dirichlet conditions
-forcing = torch.ones(meshsize, dtype=torch.float64)
+forcing = (1.-boundary_flat)*torch.ones(meshsize, dtype=torch.float64)
 uLHS = 1.0
 uRHS = 0.0
 
 #Build matrices
-solution_rhs = torch.cat([torch.tensor([uLHS], dtype=torch.float64), forcing[1:meshsize-1], torch.tensor([uRHS], dtype=torch.float64)], dim=0)
-solution_mat = torch.cat([
-    torch.unsqueeze(torch.nn.functional.one_hot(torch.tensor(0), meshsize).double(), 0),
-    Snodal[1:meshsize-1, :],
-    torch.unsqueeze(torch.nn.functional.one_hot(torch.tensor(meshsize-1), meshsize).double(), 0)
-], dim=0)
+Amat = torch.zeros_like(S)
+for i in range(meshsizex):
+    for j in range(meshsizet):
+        if boundary[i,j] == 1:
+            Amat[i,j,i,j] = 1.
+        else:
+            Amat[i,j,:,:] = S[i,j,:,:]
+# Flatten into a matrix
+Amat_flat = Amat.reshape(meshsize,meshsize)            
+# Solve the linear system
+u_sol = torch.linalg.solve(Amat_flat, forcing)
 
 
-# %% Solve the linear system and plot solution
-u_sol = torch.linalg.solve(solution_mat, solution_rhs)
-plt.plot(points.numpy(), u_sol.numpy())
-plt.title("Solution")
+# %% Visualize solution
+u_sol_grid = u_sol.reshape(meshsizet,meshsizex)
+plt.imshow(u_sol_grid.detach().numpy(), cmap='viridis')
+plt.colorbar()
+plt.title('Solution to Poisson equation')
 plt.show()
 
+# %%
