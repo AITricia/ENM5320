@@ -25,8 +25,8 @@ print(f"Using device: {device}")
 # Define points and h as needed
 Tdomain = 1
 Xdomain = 1
-meshsizex = 40
-meshsizet = 40
+meshsizex = 10
+meshsizet = 10
 h = Xdomain/float(meshsizex-1)
 k = Tdomain/float(meshsizet-1)
 meshsize = meshsizex*meshsizet
@@ -72,7 +72,7 @@ def plot_multiple_3d(n_rows=meshsizex, n_cols=meshsizet):
             # fig.colorbar(surf, ax=ax)
     plt.tight_layout()
     plt.show()
-plot_multiple_3d()
+plot_multiple_3d(3,3)
 
 # %% Get Quadrature points in space and time
 xql = pointsx[:-1].numpy() + h * (0.5 + 1. / (2. * np.sqrt(3)))
@@ -108,8 +108,8 @@ for i in range(meshsizex):
 S = (h/2)**2*torch.einsum('aijqp,aklqp->ijkl', gradpsi_ij, gradpsi_ij)
             
 # Confirm the identity the D^T*M1*D = S
-S_identity = torch.einsum('ijkl,ijkluvwx,uvwx->ijuv', D, M1, D)
-print('Unit test: S - D^T*M1*D = ',np.abs((S-S_identity).detach().numpy()).sum())
+# S_identity = torch.einsum('ijkl,ijkluvwx,uvwx->ijuv', D, M1, D)
+# print('Unit test: S - D^T*M1*D = ',np.abs((S-S_identity).detach().numpy()).sum())
 # %% Construct discretization for Poisson with Dirichlet BCs on left and right
 
 # Build flag vector to identify boundary nodes
@@ -121,9 +121,9 @@ boundary[:,-1] = 1
 boundary_flat = boundary.flatten()
 
 # Set up forcing function evaluated on the nodes and specify dirichlet conditions
-forcing = (1.-boundary_flat)*torch.ones(meshsize, dtype=torch.float64)
-uLHS = 1.0
-uRHS = 0.0
+forcing = torch.einsum('ijkl,kl->ij', M0, torch.ones_like(boundary))
+rhs = (1.-boundary_flat)*torch.flatten(forcing)
+
 
 #Build matrices
 Amat = torch.zeros_like(S)
@@ -136,7 +136,7 @@ for i in range(meshsizex):
 # Flatten into a matrix
 Amat_flat = Amat.reshape(meshsize,meshsize)            
 # Solve the linear system
-u_sol = torch.linalg.solve(Amat_flat, forcing)
+u_sol = torch.linalg.solve(Amat_flat, rhs)
 
 
 # %% Visualize solution
@@ -146,4 +146,23 @@ plt.colorbar()
 plt.title('Solution to Poisson equation')
 plt.show()
 
+# %% Visualize solution
+u_sol_grid = u_sol.reshape(meshsizet,meshsizex)
+
+# Create meshgrid for plotting
+X, Y = np.meshgrid(pointsx.numpy(), pointst.numpy())
+
+# Create 3D surface plot
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+surf = ax.plot_surface(X, Y, u_sol_grid.detach().numpy(), 
+                      cmap='viridis',
+                      linewidth=0,
+                      antialiased=True)
+ax.set_xlabel('x')
+ax.set_ylabel('t')
+ax.set_zlabel('u')
+plt.colorbar(surf)
+plt.title('Solution to Poisson equation')
+plt.show()
 # %%
