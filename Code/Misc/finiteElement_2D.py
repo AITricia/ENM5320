@@ -25,8 +25,8 @@ print(f"Using device: {device}")
 # Define points and h as needed
 Tdomain = 1
 Xdomain = 1
-meshsizex = 3
-meshsizet = 3
+meshsizex = 4
+meshsizet = 4
 h = Xdomain/float(meshsizex-1)
 k = Tdomain/float(meshsizet-1)
 meshsize = meshsizex*meshsizet
@@ -54,13 +54,11 @@ X, T = torch.meshgrid(finepointsx, finepointst)
 xflat = X.flatten()
 tflat = T.flatten()
 psi0_ij = torch.einsum('iq,jq->ijq', evalPhi_i(xflat,pointsx), evalPhi_i(tflat,pointst))
-gradpsi_ij = torch.einsum('iq,jq->ijq', evalGradPhi_i(xflat,pointsx), evalPhi_i(tflat,pointst))
-psi1_ijkl = torch.einsum('ijq,ijq->ijq', psi0_ij, gradpsi_ij)-torch.einsum('ijq,ijq->ijq', gradpsi_ij, psi0_ij)
+
 # Reshape back into meshgrid format
 psi0_ij = psi0_ij.reshape(meshsizet,meshsizex, 20*meshsizet, 20*meshsizex)
-gradpsi_ij = gradpsi_ij.reshape(meshsizet,meshsizex, 20*meshsizet, 20*meshsizex)
 # Grid of 3D plots
-def plot_multiple_3d(n_rows=2, n_cols=2):
+def plot_multiple_3d(n_rows=meshsizex, n_cols=meshsizet):
     fig = plt.figure(figsize=(15, 15))
     for i in range(n_rows):
         for j in range(n_cols):
@@ -74,7 +72,7 @@ def plot_multiple_3d(n_rows=2, n_cols=2):
             # fig.colorbar(surf, ax=ax)
     plt.tight_layout()
     plt.show()
-plot_multiple_3d(3,3)
+plot_multiple_3d()
 
 # %% Get Quadrature points in space and time
 xql = pointsx[:-1].numpy() + h * (0.5 + 1. / (2. * np.sqrt(3)))
@@ -88,14 +86,16 @@ tq = torch.tensor(tq, dtype=torch.float64)
 
 # Evaluate basis functions on quadrature points
 psi0_ij = torch.einsum('iq,jp->ijqp', evalPhi_i(xq,pointsx), evalPhi_i(tq,pointst))
-gradpsi_ij = torch.einsum('iq,jp->ijqp', evalGradPhi_i(xq,pointsx), evalPhi_i(tq,pointst))
-psi1_ijkl = torch.einsum('ijqp,ijqp->ijklqp', psi0_ij, gradpsi_ij)-torch.einsum('klqp,klqp->ijklqp', gradpsi_ij, psi0_ij)
+gradpsix_ij = torch.einsum('iq,jp->ijqp', evalGradPhi_i(xq,pointsx), evalPhi_i(tq,pointst))
+gradpsit_ij = torch.einsum('iq,jp->ijqp', evalPhi_i(xq,pointsx), evalGradPhi_i(tq,pointst))
+gradpsi_ij = torch.cat([torch.unsqueeze(gradpsix_ij,0), torch.unsqueeze(gradpsit_ij,0)], dim=0)
+psi1_ijkl = torch.einsum('ijqp,aklqp->aijklqp', psi0_ij, gradpsi_ij)-torch.einsum('aijqp,klqp->aijklqp', gradpsi_ij, psi0_ij)
 
 
 # %% Construct matrices
 #mass matrix of P1 basis functions
 M0 = (h/2)**2*torch.einsum('ijqp,klqp->ijkl', psi0_ij, psi0_ij)
-M1 = (h/2)**2*torch.einsum('ijklqp,abcdqp->ijklabcd', psi1_ijkl, psi1_ijkl)
+M1 = (h/2)**2*torch.einsum('aijklqp,auvwxqp->ijkluvwx', psi1_ijkl, psi1_ijkl)
 # integrand_M1 = torch.unsqueeze(psi1_ijkl, 0) * torch.unsqueeze(psi1_ijkl, 1)
 
 # Mnodal = (h / 2.) * torch.sum(torch.unsqueeze(nodal_basisEval, 0) * torch.unsqueeze(nodal_basisEval, 1), dim=2)
