@@ -79,48 +79,92 @@ q1 = h * (0.5 + 1. / (2. * np.sqrt(3)))
 q2 = h * (0.5 - 1. / (2. * np.sqrt(3)))
 xq = np.array([[q1,q1], [q2,q1], [q1,q2],[q2,q2]]) 
 
-# %% Construct matrices
-M0 = torch.zeros((meshsizex,meshsizet,meshsizex,meshsizet), dtype=torch.float64)
-M1 = torch.zeros((meshsizex,meshsizet,meshsizex,meshsizet,meshsizex,meshsizet,meshsizex,meshsizet), dtype=torch.float64)
-#for every element
+
+# %% Construct mass and stiffness matrices in sparse matrix format
+
+# Initialize sparse tensors with pre-allocated space
+indices_list_M0 = []
+values_list_M0 = []
+indices_list_S = []
+values_list_S = []
+indices_list_M1 = []
+values_list_M1 = []
+
+# For every element
+for i in range(meshsizex-1):
+    for j in range(meshsizet-1):
+        el_xq = torch.stack([pointsx[i] + q1, pointsx[i] + q2])
+        el_tq = torch.stack([pointst[j] + q1, pointst[j] + q2])
+        
+        # Evaluate basis functions on quadrature points
+        psi0_ij = torch.einsum('iq,jp->ijqp', evalPhi_i(el_xq,pointsx), evalPhi_i(el_tq,pointst))
+        gradpsix_ij = torch.einsum('iq,jp->ijqp', evalGradPhi_i(el_xq,pointsx), evalPhi_i(el_tq,pointst))
+        gradpsit_ij = torch.einsum('iq,jp->ijqp', evalPhi_i(el_xq,pointsx), evalGradPhi_i(el_tq,pointst))
+        gradpsi_ij = torch.cat([torch.unsqueeze(gradpsix_ij,0), torch.unsqueeze(gradpsit_ij,0)], dim=0)
+        psi1_ijkl = torch.einsum('ijqp,aklqp->aijklqp', psi0_ij, gradpsi_ij)-torch.einsum('aijqp,klqp->aijklqp', gradpsi_ij, psi0_ij)
+        
+        # Local to global mapping
+        local_nodes = [(i,j), (i+1,j), (i,j+1), (i+1,j+1)]
+        
+        # M0 construction
+        for idx1, (a,b) in enumerate(local_nodes):
+            for idx2, (c,d) in enumerate(local_nodes):
+                val = (h/2)**2 * (psi0_ij[a,b,:,:]*psi0_ij[c,d,:,:]).sum()
+                if abs(val) > 1e-14:  # Only store non-zero values
+                    indices_list_M0.append([a,b,c,d])
+                    values_list_M0.append(val)
+                val = (h/2)**2 * (gradpsi_ij[:,a,b,:,:]*gradpsi_ij[:,c,d,:,:]).sum()
+                if abs(val) > 1e-14:  # Only store non-zero values
+                    indices_list_S.append([a,b,c,d])
+                    values_list_S.append(val)    
+                # M1 construction
+                for idx3, (e,f) in enumerate(local_nodes):
+                    for idx4, (g,h) in enumerate(local_nodes):
+                        val = (h/2)**2*(psi1_ijkl[:,a,b,c,d,:,:]*
+                                      psi1_ijkl[:,e,f,g,h,:,:]).sum()
+                        if abs(val) > 1e-14:  # Only store non-zero values
+                            indices_list_M1.append([a,b,c,d,e,f,g,h])
+                            values_list_M1.append(val)
+
+# Create sparse tensors in one shot
+indices = torch.tensor(indices_list_M0).t()
+values = torch.tensor(values_list_M0)
+M0 = torch.sparse_coo_tensor(indices, values, 
+                            size=(meshsizex,meshsizet,meshsizex,meshsizet))
+
+# Create sparse tensors in one shot
+indices = torch.tensor(indices_list_S).t()
+values = torch.tensor(values_list_S)
+S = torch.sparse_coo_tensor(indices, values, 
+                            size=(meshsizex,meshsizet,meshsizex,meshsizet))
+
+indices_M1 = torch.tensor(indices_list_M1).t()
+values_M1 = torch.tensor(values_list_M1)
+M1 = torch.sparse_coo_tensor(indices_M1, values_M1, 
+                            size=(meshsizex,meshsizet,meshsizex,meshsizet,
+                                 meshsizex,meshsizet,meshsizex,meshsizet))
+
+#Coalesce the sparse tensors
+M0 = M0.coalesce()
+S = S.coalesce()
+M1 = M1.coalesce()
+# %%
+#Convert M0 to numpy matrix format and plot with spy
+M0_dense = M0.to_dense()
+plt.spy(torch.reshape(M0_dense,(100,100)).numpy())
+# Also store matrices in 2d format for later use
+
+
+# # %% Construct coboundary matrix
+# # Construct adjacency matrix
+D = torch.zeros((meshsizex,meshsizet,meshsizex,meshsizet), dtype=torch.float64)
 for i in range(meshsizex):
     for j in range(meshsizet):
-        xbl = points[i,j] # bottom left corner of element
-        xq = [xbl+[q1,q1], xbl+[q1,q2], xbl+[q2,q1], xbl+[q2,q2]]
+        for k in range(meshsizex):
+            for l in range(meshsizet):
+                D[i,j,k,l] += 1.
+                D[i,j,i,j] -= 1.
 
-# xq = np.sort(np.concatenate([xql, xqr]))
-# xq = torch.tensor(xq, dtype=torch.float64)
-# tql = pointst[:-1].numpy() + h * (0.5 + 1. / (2. * np.sqrt(3)))
-# tqr = pointst[:-1].numpy() + h * (0.5 - 1. / (2. * np.sqrt(3)))
-# tq = np.sort(np.concatenate([tql, tqr]))
-# tq = torch.tensor(tq, dtype=torch.float64)
-
-# # Evaluate basis functions on quadrature points
-# psi0_ij = torch.einsum('iq,jp->ijqp', evalPhi_i(xq,pointsx), evalPhi_i(tq,pointst))
-# gradpsix_ij = torch.einsum('iq,jp->ijqp', evalGradPhi_i(xq,pointsx), evalPhi_i(tq,pointst))
-# gradpsit_ij = torch.einsum('iq,jp->ijqp', evalPhi_i(xq,pointsx), evalGradPhi_i(tq,pointst))
-# gradpsi_ij = torch.cat([torch.unsqueeze(gradpsix_ij,0), torch.unsqueeze(gradpsit_ij,0)], dim=0)
-# psi1_ijkl = torch.einsum('ijqp,aklqp->aijklqp', psi0_ij, gradpsi_ij)-torch.einsum('aijqp,klqp->aijklqp', gradpsi_ij, psi0_ij)
-
-
-# # %% Construct matrices
-# # mass matrix of P1 basis functions
-# M0 = (h/2)**2*torch.einsum('ijqp,klqp->ijkl', psi0_ij, psi0_ij)
-# M1 = (h/2)**2*torch.einsum('aijklqp,auvwxqp->ijkluvwx', psi1_ijkl, psi1_ijkl)
-# # Construct adjacency matrix
-# D = torch.zeros((meshsizex,meshsizet,meshsizex,meshsizet), dtype=torch.float64)
-# for i in range(meshsizex):
-#     for j in range(meshsizet):
-#         for k in range(meshsizex):
-#             for l in range(meshsizet):
-#                 D[i,j,k,l] += 1.
-#                 D[i,j,i,j] -= 1.
-# # Construct stiffness matrix
-# S = (h/2)**2*torch.einsum('aijqp,aklqp->ijkl', gradpsi_ij, gradpsi_ij)
-            
-# Confirm the identity the D^T*M1*D = S
-# S_identity = torch.einsum('ijkl,ijkluvwx,uvwx->ijuv', D, M1, D)
-# print('Unit test: S - D^T*M1*D = ',np.abs((S-S_identity).detach().numpy()).sum())
 # %% Construct discretization for Poisson with Dirichlet BCs on left and right
 
 # Build flag vector to identify boundary nodes
@@ -132,18 +176,29 @@ boundary[:,-1] = 1
 boundary_flat = boundary.flatten()
 
 # Set up forcing function evaluated on the nodes and specify dirichlet conditions
-forcing = torch.einsum('ijkl,kl->ij', M0, torch.ones_like(boundary))
+forcing = torch.einsum('ijkl,kl->ij', M0_dense, torch.ones_like(boundary))
 rhs = (1.-boundary_flat)*torch.flatten(forcing)
 
-
 #Build matrices
-Amat = torch.zeros_like(S)
+Amat = torch.zeros((meshsizex,meshsizet,meshsizex,meshsizet), dtype=torch.float64)
 for i in range(meshsizex):
     for j in range(meshsizet):
         if boundary[i,j] == 1:
             Amat[i,j,i,j] = 1.
         else:
-            Amat[i,j,:,:] = S[i,j,:,:]
+            # Very painful to do matrix slicing with sparse pytorch tensors
+            # Get indices and values for the specific i,j slice
+            mask = (S.indices()[0] == i) & (S.indices()[1] == j)
+            slice_indices = S.indices()[:,mask][[2,3]]  # Keep only k,l indices
+            slice_values = S.values()[mask]
+
+            # Create new sparse tensor for this slice
+            S_slice = torch.sparse_coo_tensor(
+                slice_indices, 
+                slice_values,
+                size=(meshsizex, meshsizet)
+            )
+            Amat[i,j,:,:] = S_slice.to_dense()
 # Flatten into a matrix
 Amat_flat = Amat.reshape(meshsize,meshsize)            
 # Solve the linear system
