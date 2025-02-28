@@ -25,8 +25,8 @@ print(f"Using device: {device}")
 # Define points and h as needed
 Tdomain = 1
 Xdomain = 1
-meshsizex = 40
-meshsizet = 40
+meshsizex = 16
+meshsizet = 16
 h = Xdomain/float(meshsizex-1)
 k = Tdomain/float(meshsizet-1)
 meshsize = meshsizex*meshsizet
@@ -72,7 +72,7 @@ def plot_multiple_3d(n_rows=meshsizex, n_cols=meshsizet):
             # fig.colorbar(surf, ax=ax)
     plt.tight_layout()
     plt.show()
-plot_multiple_3d()
+plot_multiple_3d(3,3)
 
 # %% Get Quadrature points in space and time
 xql = pointsx[:-1].numpy() + h * (0.5 + 1. / (2. * np.sqrt(3)))
@@ -95,21 +95,21 @@ psi1_ijkl = torch.einsum('ijqp,aklqp->aijklqp', psi0_ij, gradpsi_ij)-torch.einsu
 # %% Construct matrices
 # mass matrix of P1 basis functions
 M0 = (h/2)**2*torch.einsum('ijqp,klqp->ijkl', psi0_ij, psi0_ij)
-M1 = (h/2)**2*torch.einsum('aijklqp,auvwxqp->ijkluvwx', psi1_ijkl, psi1_ijkl)
+# M1 = (h/2)**2*torch.einsum('aijklqp,auvwxqp->ijkluvwx', psi1_ijkl, psi1_ijkl)
 # Construct adjacency matrix
-D = torch.zeros((meshsizex,meshsizet,meshsizex,meshsizet), dtype=torch.float64)
-for i in range(meshsizex):
-    for j in range(meshsizet):
-        for k in range(meshsizex):
-            for l in range(meshsizet):
-                D[i,j,k,l] += 1.
-                D[i,j,i,j] -= 1.
-# Construct stiffness matrix
+# D = torch.zeros((meshsizex,meshsizet,meshsizex,meshsizet), dtype=torch.float64)
+# for i in range(meshsizex):
+#     for j in range(meshsizet):
+#         for k in range(meshsizex):
+#             for l in range(meshsizet):
+#                 D[i,j,k,l] += 1.
+#                 D[i,j,i,j] -= 1.
+# # Construct stiffness matrix
 S = (h/2)**2*torch.einsum('aijqp,aklqp->ijkl', gradpsi_ij, gradpsi_ij)
             
 # Confirm the identity the D^T*M1*D = S
-S_identity = torch.einsum('ijkl,ijkluvwx,uvwx->ijuv', D, M1, D)
-print('Unit test: S - D^T*M1*D = ',np.abs((S-S_identity).detach().numpy()).sum())
+# S_identity = torch.einsum('ijkl,ijkluvwx,uvwx->ijuv', D, M1, D)
+# print('Unit test: S - D^T*M1*D = ',np.abs((S-S_identity).detach().numpy()).sum())
 # %% Construct discretization for Poisson with Dirichlet BCs on left and right
 
 # Build flag vector to identify boundary nodes
