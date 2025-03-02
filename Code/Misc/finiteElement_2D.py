@@ -25,8 +25,8 @@ print(f"Using device: {device}")
 # Define points and h as needed
 Tdomain = 1
 Xdomain = 1
-meshsizex = 10
-meshsizet = 10
+meshsizex = 30
+meshsizet = 30
 h = Xdomain/float(meshsizex-1)
 k = Tdomain/float(meshsizet-1)
 meshsize = meshsizex*meshsizet
@@ -89,13 +89,13 @@ psi0_ij = torch.einsum('iq,jp->ijqp', evalPhi_i(xq,pointsx), evalPhi_i(tq,points
 gradpsix_ij = torch.einsum('iq,jp->ijqp', evalGradPhi_i(xq,pointsx), evalPhi_i(tq,pointst))
 gradpsit_ij = torch.einsum('iq,jp->ijqp', evalPhi_i(xq,pointsx), evalGradPhi_i(tq,pointst))
 gradpsi_ij = torch.cat([torch.unsqueeze(gradpsix_ij,0), torch.unsqueeze(gradpsit_ij,0)], dim=0)
-psi1_ijkl = torch.einsum('ijqp,aklqp->aijklqp', psi0_ij, gradpsi_ij)-torch.einsum('aijqp,klqp->aijklqp', gradpsi_ij, psi0_ij)
+# psi1_ijkl = torch.einsum('ijqp,aklqp->aijklqp', psi0_ij, gradpsi_ij)-torch.einsum('aijqp,klqp->aijklqp', gradpsi_ij, psi0_ij)
 
 
 # %% Construct matrices
 # mass matrix of P1 basis functions
 M0 = (h/2)**2*torch.einsum('ijqp,klqp->ijkl', psi0_ij, psi0_ij)
-M1 = (h/2)**2*torch.einsum('aijklqp,auvwxqp->ijkluvwx', psi1_ijkl, psi1_ijkl)
+# M1 = (h/2)**2*torch.einsum('aijklqp,auvwxqp->ijkluvwx', psi1_ijkl, psi1_ijkl)
 # Construct adjacency matrix
 D = torch.zeros((meshsizex,meshsizet,meshsizex,meshsizet), dtype=torch.float64)
 for i in range(meshsizex):
