@@ -25,8 +25,8 @@ print(f"Using device: {device}")
 # Define points and h as needed
 Tdomain = 1
 Xdomain = 1
-meshsizex = 30
-meshsizet = 30
+meshsizex = 16
+meshsizet = 16
 h = Xdomain/float(meshsizex-1)
 k = Tdomain/float(meshsizet-1)
 meshsize = meshsizex*meshsizet
@@ -89,7 +89,7 @@ psi0_ij = torch.einsum('iq,jp->ijqp', evalPhi_i(xq,pointsx), evalPhi_i(tq,points
 gradpsix_ij = torch.einsum('iq,jp->ijqp', evalGradPhi_i(xq,pointsx), evalPhi_i(tq,pointst))
 gradpsit_ij = torch.einsum('iq,jp->ijqp', evalPhi_i(xq,pointsx), evalGradPhi_i(tq,pointst))
 gradpsi_ij = torch.cat([torch.unsqueeze(gradpsix_ij,0), torch.unsqueeze(gradpsit_ij,0)], dim=0)
-# psi1_ijkl = torch.einsum('ijqp,aklqp->aijklqp', psi0_ij, gradpsi_ij)-torch.einsum('aijqp,klqp->aijklqp', gradpsi_ij, psi0_ij)
+psi1_ijkl = torch.einsum('ijqp,aklqp->aijklqp', psi0_ij, gradpsi_ij)-torch.einsum('aijqp,klqp->aijklqp', gradpsi_ij, psi0_ij)
 
 
 # %% Construct matrices
@@ -97,14 +97,14 @@ gradpsi_ij = torch.cat([torch.unsqueeze(gradpsix_ij,0), torch.unsqueeze(gradpsit
 M0 = (h/2)**2*torch.einsum('ijqp,klqp->ijkl', psi0_ij, psi0_ij)
 # M1 = (h/2)**2*torch.einsum('aijklqp,auvwxqp->ijkluvwx', psi1_ijkl, psi1_ijkl)
 # Construct adjacency matrix
-D = torch.zeros((meshsizex,meshsizet,meshsizex,meshsizet), dtype=torch.float64)
-for i in range(meshsizex):
-    for j in range(meshsizet):
-        for k in range(meshsizex):
-            for l in range(meshsizet):
-                D[i,j,k,l] += 1.
-                D[i,j,i,j] -= 1.
-# Construct stiffness matrix
+# D = torch.zeros((meshsizex,meshsizet,meshsizex,meshsizet), dtype=torch.float64)
+# for i in range(meshsizex):
+#     for j in range(meshsizet):
+#         for k in range(meshsizex):
+#             for l in range(meshsizet):
+#                 D[i,j,k,l] += 1.
+#                 D[i,j,i,j] -= 1.
+# # Construct stiffness matrix
 S = (h/2)**2*torch.einsum('aijqp,aklqp->ijkl', gradpsi_ij, gradpsi_ij)
             
 # Confirm the identity the D^T*M1*D = S
@@ -121,9 +121,9 @@ boundary[:,-1] = 1
 boundary_flat = boundary.flatten()
 
 # Set up forcing function evaluated on the nodes and specify dirichlet conditions
-forcing = torch.einsum('ijkl,kl->ij', M0, torch.ones_like(boundary))
-rhs = (1.-boundary_flat)*torch.flatten(forcing)
-
+forcing = (1.-boundary_flat)*torch.ones(meshsize, dtype=torch.float64)
+uLHS = 1.0
+uRHS = 0.0
 
 #Build matrices
 Amat = torch.zeros_like(S)
@@ -136,7 +136,7 @@ for i in range(meshsizex):
 # Flatten into a matrix
 Amat_flat = Amat.reshape(meshsize,meshsize)            
 # Solve the linear system
-u_sol = torch.linalg.solve(Amat_flat, rhs)
+u_sol = torch.linalg.solve(Amat_flat, forcing)
 
 
 # %% Visualize solution
@@ -146,23 +146,4 @@ plt.colorbar()
 plt.title('Solution to Poisson equation')
 plt.show()
 
-# %% Visualize solution
-u_sol_grid = u_sol.reshape(meshsizet,meshsizex)
-
-# Create meshgrid for plotting
-X, Y = np.meshgrid(pointsx.numpy(), pointst.numpy())
-
-# Create 3D surface plot
-fig = plt.figure(figsize=(10, 8))
-ax = fig.add_subplot(111, projection='3d')
-surf = ax.plot_surface(X, Y, u_sol_grid.detach().numpy(), 
-                      cmap='viridis',
-                      linewidth=0,
-                      antialiased=True)
-ax.set_xlabel('x')
-ax.set_ylabel('t')
-ax.set_zlabel('u')
-plt.colorbar(surf)
-plt.title('Solution to Poisson equation')
-plt.show()
 # %%
