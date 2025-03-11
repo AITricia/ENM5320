@@ -13,7 +13,7 @@ import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 
 # Set random seed for reproducibility
-np.random.seed(42)
+np.random.seed(42) 
 torch.manual_seed(42)
 
 # Check if CUDA is available and set device
@@ -25,9 +25,9 @@ print(f"Using device: {device}")
 # Define points and h as needed
 Csq = 1
 Xdomain = 1
-Tdomain = 2
+Tdomain = 3
 meshsizex = 16
-meshsizet = meshsizex*int(2.0*Tdomain/Xdomain)
+meshsizet = int(meshsizex*2.0*Tdomain/Xdomain)
 h = Xdomain/float(meshsizex-1)
 k = Tdomain/float(meshsizet-1)
 meshsize = meshsizex*meshsizet
@@ -98,7 +98,11 @@ forcing = torch.zeros((meshsizex,meshsizet), dtype=torch.float64)
 for i in range(meshsizex):
     for j in range(meshsizet):
         if boundary[i,j] == 2: 
-            forcing[i,j] = torch.sin(2*np.pi*(pointsx[i]-pointst[j]))+torch.sin(2*np.pi*(pointsx[i]+pointst[j])) # Initial condition
+            # smoothed tophat function
+            # forcing[i,j] = torch.abs(pointsx[i]-0.5*Xdomain) < 0.5*Xdomain/10.0
+            
+            forcing[i,j] = torch.exp(-20*(pointsx[i]-0.5*Xdomain)**2) # Initial condition
+            # forcing[i,j] = torch.sin(2*np.pi*(pointsx[i]-pointst[j]))+torch.sin(2*np.pi*(pointsx[i]+pointst[j])) # Initial condition
             # forcing[i,j] = torch.cos(2*np.pi*(pointsx[i]-pointst[j]))+torch.cos(2*np.pi*(pointsx[i]+pointst[j])) # Initial condition
 
 # Flatten
@@ -113,13 +117,13 @@ for i in range(meshsizex):
         if boundary[i,j] == 2: # Dirichlet BC on IC
             Amat[i,j,i,j] = 1.
         if boundary[i,j] == 1: # Periodic BC
+            Amat[0,j,:,:] += S[i,j,:,:]
             Amat[i,j,i,j] =  1.
             Amat[i,j,0,j] = -1.
-            Amat[0,j,i,:] += S[0,j,i,:]
 # Flatten into a matrix
 Amat_flat = Amat.reshape(meshsize,meshsize)            
 # Solve the linear system
-u_sol = torch.linalg.solve(Amat_flat, forcing_flat)
+u_sol = torch.linalg.lstsq(Amat_flat, forcing_flat)[0]
 
 
 # %% Visualize solution
