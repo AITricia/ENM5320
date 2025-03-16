@@ -23,11 +23,10 @@ print(f"Using device: {device}")
 
 # %%
 # Define points and h as needed
-meshsize= 10
+meshsize= 4
 h = 1./float(meshsize-1)
-points = torch.tensor(np.linspace(0,1,meshsize), dtype=torch.float64)  # Replace [...] with actual values
-finepoints = torch.tensor(np.linspace(0,1,20*meshsize), dtype=torch.float64)  # Replace [...] with actual values
-
+points = torch.tensor(np.linspace(0,1,meshsize), dtype=torch.float64) 
+finepoints = torch.tensor(np.linspace(0,1,21*meshsize), dtype=torch.float64)  
 
 def evalPhi_i(x):
     x_expanded = torch.unsqueeze(x, 0)
@@ -70,22 +69,26 @@ Snodal = (h / 2.) * torch.einsum('ijq->ij', torch.unsqueeze(nodal_gradbasisEval,
 # %% Construct discretization for Poisson with Dirichlet BCs on left and right
 
 # Set up forcing function evaluated on the nodes and specify dirichlet conditions
-forcing = torch.ones(meshsize, dtype=torch.float64)
-uLHS = 1.0
-uRHS = 0.0
+forcingvec = torch.ones_like(xq)
+forcing = (h / 2.) * torch.sum(forcingvec * nodal_basisEval, dim=1)
+uLHS = 0.0
 
-#Build matrices
-solution_rhs = torch.cat([torch.tensor([uLHS], dtype=torch.float64), forcing[1:meshsize-1], torch.tensor([uRHS], dtype=torch.float64)], dim=0)
+# %% Build matrices
+solution_rhs = torch.cat([torch.tensor([uLHS], dtype=torch.float64), forcing[1:meshsize]], dim=0)
 solution_mat = torch.cat([
     torch.unsqueeze(torch.nn.functional.one_hot(torch.tensor(0), meshsize).double(), 0),
-    Snodal[1:meshsize-1, :],
-    torch.unsqueeze(torch.nn.functional.one_hot(torch.tensor(meshsize-1), meshsize).double(), 0)
+    Snodal[1:meshsize, :]
 ], dim=0)
 
 
 # %% Solve the linear system and plot solution
 u_sol = torch.linalg.solve(solution_mat, solution_rhs)
-plt.plot(points.numpy(), u_sol.numpy())
+uexact = finepoints.numpy()*(-0.5*finepoints.numpy()+1.0)
+plt.plot(points.numpy(), u_sol.numpy(),'.--',label='Computed',markersize=20)
+plt.plot(finepoints.numpy(), uexact,label='Exact')
+plt.legend()
 plt.title("Solution")
 plt.show()
 
+
+# %%
