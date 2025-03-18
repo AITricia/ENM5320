@@ -50,6 +50,9 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_11.pdf)
   - [Reference class notes](/https://chrisrackauckas.com/assets/Papers/ChrisRackauckas-IntuitiveSDEs.pdf)
   - Specific textbooks to fill in probability background are given in 3/3 lecture notes.
+- **Mar 17.** Concluding finite difference method. Introduction to Galerkin/Rayleigh-Ritz method and FEM code tutorial.
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_11.pdf)
+  - [Code](https://github.com/natrask/ENM5320/blob/main/Code/finiteElement.py)
     
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
