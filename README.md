@@ -53,7 +53,7 @@ Ed Discussion board: https://edstem.org/us/courses/74501
 - **Mar 17.** Concluding finite difference method. Introduction to Galerkin/Rayleigh-Ritz method and FEM code tutorial.
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_11.pdf)
   - [Code](https://github.com/natrask/ENM5320/blob/main/Code/finiteElement.py)
-- **Mar 19.** Quasi-optimality estimates, nodal FEM and the interpolant, optimal convergence in L2/H1.
+- **Mar 19.** Quasi-optimality estimates, nodal FEM and the interpolant, optimal convergence in L2/H1, abstract Lax-Milgram theory.
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_11.pdf)
   - [Code](https://github.com/natrask/ENM5320/blob/main/Code/FEMconvergence.ipynb)
   - 
