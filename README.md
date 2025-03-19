@@ -53,7 +53,10 @@ Ed Discussion board: https://edstem.org/us/courses/74501
 - **Mar 17.** Concluding finite difference method. Introduction to Galerkin/Rayleigh-Ritz method and FEM code tutorial.
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_11.pdf)
   - [Code](https://github.com/natrask/ENM5320/blob/main/Code/finiteElement.py)
-    
+- **Mar 19.** Quasi-optimality estimates, nodal FEM and the interpolant, optimal convergence in L2/H1.
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_11.pdf)
+  - [Code](https://github.com/natrask/ENM5320/blob/main/Code/FEMconvergence.ipynb)
+  - 
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
 tackle previously inaccessible problems in scientific discovery, engineering prediction, and optimal design. ML however has been
