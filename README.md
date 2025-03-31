@@ -51,12 +51,16 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [Reference class notes](/https://chrisrackauckas.com/assets/Papers/ChrisRackauckas-IntuitiveSDEs.pdf)
   - Specific textbooks to fill in probability background are given in 3/3 lecture notes.
 - **Mar 17.** Concluding finite difference method. Introduction to Galerkin/Rayleigh-Ritz method and FEM code tutorial.
-  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_11.pdf)
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_12.pdf)
   - [Code](https://github.com/natrask/ENM5320/blob/main/Code/finiteElement.py)
 - **Mar 19.** Quasi-optimality estimates, nodal FEM and the interpolant, optimal convergence in L2/H1, abstract Lax-Milgram theory.
-  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_11.pdf)
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_13.pdf)
   - [Code](https://github.com/natrask/ENM5320/blob/main/Code/FEMconvergence.ipynb)
   - References: [Johnson](https://www.amazon.com/Numerical-Solution-Differential-Equations-Mathematics/dp/048646900X), [Brenner & Scott](https://link.springer.com/book/10.1007/978-0-387-75934-0)
+- **Mar 24/26.** Application of Lax-Milgram. Reaction-diffusion, elasticity, and incompressibility. Mixed finite element methods.
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_14.pdf)
+- **Mar 31.** Mixed finite element methods continued. Inf-sup compatibility. Conservation structure and nonlinear perturbations.
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_15.pdf)
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
 tackle previously inaccessible problems in scientific discovery, engineering prediction, and optimal design. ML however has been
