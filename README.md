@@ -59,8 +59,13 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - References: [Johnson](https://www.amazon.com/Numerical-Solution-Differential-Equations-Mathematics/dp/048646900X), [Brenner & Scott](https://link.springer.com/book/10.1007/978-0-387-75934-0)
 - **Mar 24/26.** Application of Lax-Milgram. Reaction-diffusion, elasticity, and incompressibility. Mixed finite element methods.
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_14.pdf)
-- **Mar 31.** Mixed finite element methods continued. Inf-sup compatibility. Conservation structure and nonlinear perturbations.
+- **Mar 31/Apr 1.** Mixed finite element methods continued. Inf-sup compatibility. Conservation structure and nonlinear perturbations.
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_15.pdf)
+  - [Slides](https://github.com/natrask/ENM5320/blob/main/Lecture%20videos/slides_4_3.pptx)
+- **Apr 7.** Introduction to graphs, analysis of graph Laplacian, graph exterior calculus.
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_16.pdf)
+  - References: [Spectral graph theory, Chung](https://books.google.com/books?hl=en&lr=&id=4IK8DgAAQBAJ&oi=fnd&pg=PP1&dq=spectral+graph+theory+chung&ots=Et6QXiwStk&sig=eW5_hSCo5ZViVTvpQgKz43nJ00c#v=onepage&q=spectral%20graph%20theory%20chung&f=false), [Statistical ranking and combinatorial Hodge theory, Jiang et al](https://link.springer.com/article/10.1007/s10107-010-0419-x), [Exact physics on graphs, Trask et al](https://www.sciencedirect.com/science/article/pii/S0021999122000316)
+    
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
 tackle previously inaccessible problems in scientific discovery, engineering prediction, and optimal design. ML however has been
