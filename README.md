@@ -65,6 +65,10 @@ Ed Discussion board: https://edstem.org/us/courses/74501
 - **Apr 7.** Introduction to graphs, analysis of graph Laplacian, graph exterior calculus.
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_16.pdf)
   - References: [Spectral graph theory, Chung](https://books.google.com/books?hl=en&lr=&id=4IK8DgAAQBAJ&oi=fnd&pg=PP1&dq=spectral+graph+theory+chung&ots=Et6QXiwStk&sig=eW5_hSCo5ZViVTvpQgKz43nJ00c#v=onepage&q=spectral%20graph%20theory%20chung&f=false), [Statistical ranking and combinatorial Hodge theory, Jiang et al](https://link.springer.com/article/10.1007/s10107-010-0419-x), [Exact physics on graphs, Trask et al](https://www.sciencedirect.com/science/article/pii/S0021999122000316)
+- **Apr 9.** The Hodge decomposition in vector and graph calculus. Applications to splitting schemes in fluid flows. Exact sequence property. Learning flows on graphs, causal decompositions.
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_17.pdf)
+  - [Video recording of department seminar](https://github.com/natrask/ENM5320/blob/main/Lecture%20videos/Andrew%20Stuart%20MEAM%20Spring%20Seminar%20EDIT%20040825.mp4)
+  - Papers regarding graph calculus: [HodgeRank](https://web.stanford.edu/~yyye/hodgeRank2011.pdf), [Trainable DAGs, Ref1](https://arxiv.org/pdf/1904.10098) [Ref2](https://arxiv.org/abs/2310.18471)
     
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
