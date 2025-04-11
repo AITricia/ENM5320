@@ -69,7 +69,9 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_17.pdf)
   - [Video recording of department seminar](https://github.com/natrask/ENM5320/blob/main/Lecture%20videos/Andrew%20Stuart%20MEAM%20Spring%20Seminar%20EDIT%20040825.mp4)
   - Papers regarding graph calculus: [HodgeRank](https://web.stanford.edu/~yyye/hodgeRank2011.pdf), [Trainable DAGs, Ref1](https://arxiv.org/pdf/1904.10098) [Ref2](https://arxiv.org/abs/2310.18471)
-    
+- **Apr 14.** Final project vignettes: Hamiltonians for continuum mechanics, Transformer architectures.
+  - [Transformer demo](https://github.com/natrask/ENM5320/blob/main/Code/TransformerDemo.ipynb)
+- **Apr 16.** Lecture will be cancelled due to travel. Please meet with your groups and take the opportunity to start
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
 tackle previously inaccessible problems in scientific discovery, engineering prediction, and optimal design. ML however has been
