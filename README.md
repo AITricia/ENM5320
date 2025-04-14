@@ -69,8 +69,12 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_17.pdf)
   - [Video recording of department seminar](https://github.com/natrask/ENM5320/blob/main/Lecture%20videos/Andrew%20Stuart%20MEAM%20Spring%20Seminar%20EDIT%20040825.mp4)
   - Papers regarding graph calculus: [HodgeRank](https://web.stanford.edu/~yyye/hodgeRank2011.pdf), [Trainable DAGs, Ref1](https://arxiv.org/pdf/1904.10098) [Ref2](https://arxiv.org/abs/2310.18471)
-- **Apr 14.** Final project vignettes: Hamiltonians for continuum mechanics, Transformer architectures.
+- **Apr 14.** Building blocks for final projects. Attention + transformers. Graph attention, incorporating physics into GAT architectures.
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_18.pdf)
   - [Transformer demo](https://github.com/natrask/ENM5320/blob/main/Code/TransformerDemo.ipynb)
+  - [Attention is all you need](https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf)
+  - [Variational dynamics for graph learning](https://proceedings.neurips.cc/paper_files/paper/2023/hash/7903af0a1cffb43dbb2f8160d110a5f3-Abstract-Conference.html)
+  - [Original graph attention network paper](https://petar-v.com/GAT/)
 - **Apr 16.** Lecture will be cancelled due to travel. Please meet with your groups and take the opportunity to start
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
