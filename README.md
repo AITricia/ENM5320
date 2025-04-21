@@ -76,6 +76,10 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [Variational dynamics for graph learning](https://proceedings.neurips.cc/paper_files/paper/2023/hash/7903af0a1cffb43dbb2f8160d110a5f3-Abstract-Conference.html)
   - [Original graph attention network paper](https://petar-v.com/GAT/)
 - **Apr 16.** Lecture will be cancelled due to travel. Please meet with your groups and take the opportunity to start
+- **Apr 21.** Variational inference and multimodal scientific data.
+  - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_19.pdf)
+  - [Slides](https://github.com/natrask/ENM5320/blob/main/Lecture%20videos/SIAM-materials2024.pptx)
+    
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
 tackle previously inaccessible problems in scientific discovery, engineering prediction, and optimal design. ML however has been
