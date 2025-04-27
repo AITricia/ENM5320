@@ -79,8 +79,9 @@ Ed Discussion board: https://edstem.org/us/courses/74501
 - **Apr 21.** Variational inference and multimodal scientific data.
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_19.pdf)
   - [Slides](https://github.com/natrask/ENM5320/blob/main/Lecture%20videos/SIAM-materials2024.pptx)
+  - [Introduction to VAEs (Kingma+Welling)](https://arxiv.org/abs/1906.02691)
 - **Apr 28.** Probabilistic physics with variational inference. Denoising diffusion and physical-inspired embeddings.
-  - [Deep unsupervised learning with non-equilibrium thermodynamics](https://arxiv.org/abs/1503.03585)
+  - [Deep unsupervised learning with non-equilibrium thermodynamics (Sohl-Dickstein et al)](https://arxiv.org/abs/1503.03585)
   - [Denoising diffusion paper](https://arxiv.org/pdf/2006.11239)
 - **Apr 30.** Final day of class. Working on final projects.
 - **May 9.** Final presentations. DRLB-A2 from 3-5.
