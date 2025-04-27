@@ -75,11 +75,19 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [Attention is all you need](https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf)
   - [Variational dynamics for graph learning](https://proceedings.neurips.cc/paper_files/paper/2023/hash/7903af0a1cffb43dbb2f8160d110a5f3-Abstract-Conference.html)
   - [Original graph attention network paper](https://petar-v.com/GAT/)
-- **Apr 16.** Lecture will be cancelled due to travel. Please meet with your groups and take the opportunity to start
+- **Apr 16.** Lecture will be cancelled due to travel. Please meet with your groups and take the opportunity to start final projects.
 - **Apr 21.** Variational inference and multimodal scientific data.
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_19.pdf)
   - [Slides](https://github.com/natrask/ENM5320/blob/main/Lecture%20videos/SIAM-materials2024.pptx)
-    
+- **Apr 28.** Probabilistic physics with variational inference. Denoising diffusion and physical-inspired embeddings.
+  - [Deep unsupervised learning with non-equilibrium thermodynamics](https://arxiv.org/abs/1503.03585)
+  - [Denoising diffusion paper](https://arxiv.org/pdf/2006.11239)
+- **Apr 30.** Final day of class. Working on final projects.
+- **May 9.** Final presentations. DRLB-A2 from 3-5.
+  - Prepare 5 minute presentation + 3m for questions.
+  - OK to present preliminary/negative results (encouraged!)
+  - Donuts! 
+- **May 12.** Last day to submit final project report.
 # Description
 Many seek to replicate the successes of AI/ML in computer vision and natural language processing in the sciences, aiming to
 tackle previously inaccessible problems in scientific discovery, engineering prediction, and optimal design. ML however has been
