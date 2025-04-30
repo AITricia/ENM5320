@@ -84,7 +84,10 @@ Ed Discussion board: https://edstem.org/us/courses/74501
   - [Lecture notes](https://github.com/natrask/ENM5320/blob/main/Lecture%20Notes/Lecture_20.pdf)
   - [Deep unsupervised learning with non-equilibrium thermodynamics (Sohl-Dickstein et al)](https://arxiv.org/abs/1503.03585)
   - [Denoising diffusion paper](https://arxiv.org/pdf/2006.11239)
-- **Apr 30.** Final day of class. Working on final projects.
+- **Apr 30.** Final day of class. Designing stochastic processes with tailored statistics for denoising diffusion. Fluctuation-dissipation balance. Final projects.
+  - Lecture notes
+  - [The fluctuation dissipation theorem - Kubo](https://iopscience.iop.org/article/10.1088/0034-4885/29/1/306/meta?casa_token=hmx3PnTB1NcAAAAA:hdeAMfQ5dcu166npNwQEirDMBionpKfr1cI5yyKKurfQp0phgtJwTfQPZfYz6BHftRKCZspYK28wroHZJV7L4iSV1ciz)
+  - [Derivation of stochastic diffusion](https://arxiv.org/pdf/1806.04317)
 - **May 9.** Final presentations. DRLB-A2 from 3-5.
   - Prepare 5 minute presentation + 3m for questions.
   - OK to present preliminary/negative results (encouraged!)
